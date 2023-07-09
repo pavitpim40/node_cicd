@@ -1,11 +1,13 @@
 const express = require('express');
+const add = require('./add');
 // const cors = require('cors');
 
 const app = express();
 // app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send(`<h1>Hello world from Express</h1>`);
+    add(1, 2);
+    res.send(`<h1>Hello world from Express!!</h1>`);
 });
 
 app.listen(8000, () => {
