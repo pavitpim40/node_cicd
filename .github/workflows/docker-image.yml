@@ -46,6 +46,6 @@ jobs:
             - name: Deploy to Cloud
               uses: appleboy/ssh-action@master
               with:
-                  host: 139.5.147.220
-                  username: nc-user
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
