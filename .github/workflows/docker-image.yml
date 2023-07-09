@@ -50,4 +50,8 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: ${{ secrets.SSH_PORT }}
-                  script: whoami
+                  script: |
+                      docker pull pavitpim40/express-ci:latest
+                      docker stop express-ci
+                      docker rm express-ci
+                      docker run -d --name express-ci -p 8000:8000 pavitpim40/express-ci:latest
