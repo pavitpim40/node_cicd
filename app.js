@@ -7,7 +7,7 @@ const app = express();
 
 app.get('/', (req, res) => {
     add(1, 2);
-    res.send(`<h1>Hello world from Express!!</h1>`);
+    res.send(`<h1>Hello world from Express!! with CICD</h1>`);
 });
 
 app.listen(8000, () => {
