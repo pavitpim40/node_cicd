@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-    add(1, 2);
+    // add(1, 2);
     res.send(`<h1>Hello world from Express with CICD</h1>`);
 });
 
