@@ -1,61 +1,61 @@
 name: Docker Image CI
 
 on:
-    push:
-        branches: ['main']
-    pull_request:
-        branches: ['main']
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            # Checkout the repo
-            - name: Checkout code
-              uses: actions/checkout@v3
+    steps:
+      # Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-            # Set up Node.js
-            - name: Set up Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 14
-            # Install dependencies
-            - name: Install dependencies
-              run: npm install
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-            # Run tests
-            - name: Run tests
-              run: npm test
+      # Run tests
+      - name: Run tests
+        run: npm test
 
-            # Login to DockerHub
-            - name: Login to DockerHub
-              uses: docker/login-action@v1
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # Login to DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            # Build Image
-            # - name: Build Image
-            #   run: docker buildx build --platform linux/amd64 -t pavitpim40/simple-express-api:1.0.0 --push .
-            - name: Docker Build and Push
-              uses: docker/build-push-action@v2
-              with:
-                  context: .
-                  push: true
-                  tags: pavitpim40/express-ci:latest
+      # Build Image
+      # - name: Build Image
+      #   run: docker buildx build --platform linux/amd64 -t pavitpim40/simple-express-api:1.0.0 --push .
+      - name: Docker Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: pavitpim40/express-ci:latest
 
-            # Deploy to Cloud
+      # Deploy to Cloud
 
-            - name: Deploy to Cloud
-              uses: appleboy/ssh-action@master
-              with:
-                  host: ${{ secrets.HOST }}
-                  username: ${{ secrets.USERNAME }}
-                  key: ${{ secrets.SSH_PRIVATE_KEY }}
-                  port: ${{ secrets.SSH_PORT }}
-                  script: |
-                      docker pull pavitpim40/express-ci:latest
-                      docker stop express-ci
-                      docker rm express-ci
-                      docker run -d --name express-ci -p 8000:8000 pavitpim40/express-ci:latest
+      - name: Deploy to Cloud
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker pull pavitpim40/express-ci:latest
+            docker stop express-ci
+            docker rm express-ci
+            docker run -d --name express-ci -p 8000:8000 pavitpim40/express-ci:latest
