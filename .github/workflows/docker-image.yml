@@ -56,6 +56,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker pull pavitpim40/express-ci:latest
-            docker stop express-ci
-            docker rm express-ci
+
             docker run -d --name express-ci -p 8000:8000 pavitpim40/express-ci:latest
