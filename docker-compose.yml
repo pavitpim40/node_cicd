@@ -1,8 +1,13 @@
 version: '3'
 services:
-    redis-server:
-        image: 'redis'
-    node-app:
-        build: .
-        ports:
-            - '8000:8080'
+  redis-server:
+    image: 'redis'
+  node-app-1:
+    build: .
+    ports:
+      - '8000:8000'
+  node-app-2:
+    build: .
+    ports:
+      - '8001:8000'
+# IAC = Infra as Code

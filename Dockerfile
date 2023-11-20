@@ -8,7 +8,6 @@ COPY package.json .
 
 # Path: /app
 RUN npm install
-# RUN npm install pm2 -g
 
 # Path: /app
 COPY . .
